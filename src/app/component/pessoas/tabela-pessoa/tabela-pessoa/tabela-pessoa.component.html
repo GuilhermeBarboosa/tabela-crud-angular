@@ -1,0 +1,64 @@
+<ng-template #elseBlock>Não há dados</ng-template>
+
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <div class="mb-3">
+        <input
+          type="text"
+          [formControl]="pessoaInput"
+          class="form-control"
+          id="pessoaInput"
+          placeholder="Digite o cpf da pessoa"
+        />
+      </div>
+    </div>
+
+    <div class="col-6">
+      <button routerLink="/criar-pessoa" type="button" class="btn btn-success">
+        Novo
+      </button>
+    </div>
+  </div>
+
+  <table
+    *ngIf="pessoas$ | async as pessoas; else elseBlock; else: elseBlock"
+    class="table"
+  >
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nome</th>
+        <th scope="col">CPF</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let pessoa of pessoas">
+      <tr>
+        <th scope="row">{{ pessoa.id }}</th>
+        <td>{{ pessoa.nome }}</td>
+        <td>{{ pessoa.cpf }}</td>
+        <td>
+          <button
+            routerLink="/excluir-pessoa/{{ pessoa.id }}"
+            type="button"
+            class="btn btn-danger"
+          >
+            Excluir
+          </button>
+        </td>
+
+        <td>
+          <button
+            routerLink="/criar-pessoa/{{ pessoa.id }}"
+            type="button"
+            class="btn btn-primary"
+          >
+            Modificar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
